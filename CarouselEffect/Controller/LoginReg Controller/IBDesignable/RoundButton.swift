@@ -28,4 +28,19 @@ class RoundButton: UIButton {
             self.layer.borderColor = borderColor.cgColor
         }
     }
+    
+    @IBInspectable var buttonImage: UIImage? {
+        
+        didSet {
+            updateView()
+            
+        }
+    }
+    
+    func updateView() {
+        let chatButton  = UIButton(type: .custom)
+        if let image = UIImage(named: "chat.png") {
+            chatButton.setImage(image, for: .normal)
+        }
+    }
 }

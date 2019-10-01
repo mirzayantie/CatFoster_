@@ -14,13 +14,18 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
     
     @IBOutlet weak var catName: UITextField!
     @IBOutlet weak var catImage: UIImageView!
-    @IBOutlet weak var catDescription: UITextField!
     @IBOutlet weak var catBreed: UITextField!
     @IBOutlet weak var catAge: UITextField!
     @IBOutlet weak var catGender: UITextField!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
+  
+    @IBOutlet weak var submitButton: RoundButton!
     @IBOutlet weak var catColour: UITextField!
+    @IBOutlet weak var catDescription: TextBorder!
     
+    @IBOutlet weak var additionalInfo: TextBorder!
+    @IBOutlet weak var descriptionHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var infoHeightConstraint: NSLayoutConstraint!
     
     var cat: CatProfile?
     var currentid = ""
@@ -30,6 +35,7 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         // Do any additional setup after loading the view, typically from a nib.
         
         catName.delegate = self
+        
         
         
         //Set up views if editing an existing cat
@@ -42,36 +48,35 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
             currentid = cat.catID
             catDescription.text = cat.catDescription
             catColour.text = cat.catColour
+            additionalInfo.text = cat.additionalInfo
         }
         
         //configNavigationBar()
         
-        //Enable the save button only if the text field has a valid meal name
-        updateSaveButtonState()
+        //textViewSetup()
+        
+        //Enable the submit button only if the text field has a valid input
+        updateSubmitButtonState()
         
         
         
     }
     
+    func textViewSetup() {
+        //disable scroll
+        catDescription.isScrollEnabled = false
+        additionalInfo.isScrollEnabled = false
+        // auto resize textview height according to content
+        descriptionHeight.constant = self.catDescription.contentSize.height
+        infoHeightConstraint.constant = self.additionalInfo.contentSize.height
+    }
     //MARK: Navigation
-    @IBAction func cancel(_ sender: UIBarButtonItem) {
-//        let isPresentingHome = presentedViewController is UINavigationController
-//        if isPresentingHome {
-//            //from Add Post Cat Page
-            dismiss(animated: true, completion: nil)
-//        } else if let owningNavigationController = navigationController {
-//            //from Edit Post Cat Page
-//            owningNavigationController.popViewController(animated: true)
-//        } else {
-//            fatalError("The Post For Adoption Controller is not inside a navigation controller")
-//        }
-        
-    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        guard let button = sender as? UIBarButtonItem, button === saveButton else {
-            os_log("The save button was not pressed, cancelling...", log: OSLog.default, type: .debug)
+    
+    @IBAction func submitButtonPressed(_ sender: Any) {
+        
+        guard let button = sender as? RoundButton, button === submitButton else {
+            os_log("The submit button was not pressed, cancelling...", log: OSLog.default, type: .debug)
             return
         }
         
@@ -82,9 +87,10 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         let gender = catGender.text ?? ""
         let description = catDescription.text ?? ""
         let colour = catColour.text ?? ""
+        let otherInfo = additionalInfo.text ?? ""
         
         
-        cat = CatProfile(catID: currentid, catName: name, catImage: photo, catBreed: breed, catAge: age, catGender: gender, catDescription: description, catColour: colour )
+        cat = CatProfile(catID: currentid, catName: name, catImage: photo, catBreed: breed, catAge: age, catGender: gender, catDescription: description, catColour: colour, additionalInfo: otherInfo )
         
         //access firebase database
         var ref: DatabaseReference!
@@ -96,7 +102,16 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         var dict = [String: Any]()
         dict.updateValue(name, forKey: "name")
         dict.updateValue("photo\(name)", forKey: "photo")
+        dict.updateValue(age, forKey: "age")
+        dict.updateValue(breed, forKey: "breed")
+        dict.updateValue(gender, forKey: "gender")
+        dict.updateValue(colour, forKey: "colour")
+        dict.updateValue(description, forKey: "description")
+        dict.updateValue(otherInfo, forKey: "otherInfo")
+        
         catsRef.childByAutoId().setValue(dict)
+        
+
     }
     //MARK: ACTION
     
@@ -131,6 +146,7 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
     }
     
     //MARK: UITextFieldDelegate
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //hide keyboard
         catName.resignFirstResponder()
@@ -138,24 +154,34 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        updateSaveButtonState()
+        updateSubmitButtonState()
         navigationItem.title = textField.text
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         //Disable the button when editing
-        saveButton.isEnabled = false
+        submitButton.isEnabled = false
     }
     
     //MARK: Private Methods
-    private func updateSaveButtonState(){
+    
+    private func updateSubmitButtonState(){
         //Disable the Save button if the text field is empty
-        //let text = catName.text ?? ""
-        //saveButton.isEnabled = !text.isEmpty
-        
-        saveButton.isEnabled = false
+//        let text = catName.text ?? ""
+//        saveButton.isEnabled = !text.isEmpty
+//
+//        saveButton.isEnabled = false
+//
         // if all text field are not empty, enable save button
-        [catAge, catName, catColour, catBreed, catGender, catDescription].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
+        
+        //        guard catDescription != nil else {
+        //            return
+        //
+        //        }
+        [catAge, catName, catColour, catBreed, catGender].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
+        //
+        
+        
     }
     
     @objc func editingChanged(_ textField: UITextField) {
@@ -169,46 +195,49 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
             let name = catName.text, !name.isEmpty,
             let age = catAge.text, !age.isEmpty,
             let colour = catColour.text, !colour.isEmpty,
-            let breed = catBreed.text, !breed.isEmpty,
-            let description = catDescription.text, !description.isEmpty
+            let breed = catBreed.text, !breed.isEmpty
+            //let description = catDescription.text, !description.isEmpty
             
             else {
                 
-                saveButton.isEnabled = false
+                self.submitButton.isEnabled = false
                 return
         }
-        saveButton.isEnabled = true
+       
+        submitButton.isEnabled = true
     }
     
-    func configNavigationBar() {
-        
-        // Create the navigation bar
-        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 64))
-        
-        // Offset by 20 pixels vertically to take the status bar into account
-        
-        navigationBar.backgroundColor = UIColor.white
-        
-        // Create a navigation item with a title
-        let navigationItem = UINavigationItem()
-        navigationItem.title = "Post"
-        
-        //Back button logged user off to login page
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
-        
-        
-        // Assign the navigation item to the navigation bar
-        navigationBar.items = [navigationItem]
-        
-        // Make the navigation bar a subview of the current view controller
-        self.view.addSubview(navigationBar)
-        
-    }
     
-    @objc func handleBack() {
-        
-        dismiss(animated: true, completion: nil)
-    }
+    
+    //    func configNavigationBar() {
+    //
+    //        // Create the navigation bar
+    //        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 64))
+    //
+    //        // Offset by 20 pixels vertically to take the status bar into account
+    //
+    //        navigationBar.backgroundColor = UIColor.white
+    //
+    //        // Create a navigation item with a title
+    //        let navigationItem = UINavigationItem()
+    //        navigationItem.title = "Post"
+    //
+    //        //Back button logged user off to login page
+    //        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
+    //
+    //
+    //        // Assign the navigation item to the navigation bar
+    //        navigationBar.items = [navigationItem]
+    //
+    //        // Make the navigation bar a subview of the current view controller
+    //        self.view.addSubview(navigationBar)
+    //
+    //    }
+    //
+    //    @objc func handleBack() {
+    //
+    //        dismiss(animated: true, completion: nil)
+    //    }
 }
 
 

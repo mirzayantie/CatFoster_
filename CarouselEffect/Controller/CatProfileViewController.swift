@@ -15,6 +15,7 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var searchController: UISearchController!
 
+    @IBOutlet weak var showAllButton: UIButton!
     @IBOutlet weak var welcomeMessage: UILabel!
     
     var catProfile = CatProfile.createCatProfile()
@@ -23,6 +24,12 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCollectionView()
+        checkIfUserIsLoggedIn()
+        //setupNavBarButton()
+    }
+
+    func setupCollectionView() {
         let screenSize = UIScreen.main.bounds.size
         let cellWidth = floor(screenSize.width * cellScale)
         let cellHeight = floor(screenSize.height * cellScale)
@@ -30,14 +37,11 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
         let insetY = (view.bounds.width - cellHeight)/2.0
         
         collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
-
+        
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        checkIfUserIsLoggedIn()
-        setupNavBarButton()
     }
-
+    
     func checkIfUserIsLoggedIn() {
         
         if Auth.auth().currentUser != nil {
@@ -143,6 +147,7 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBAction func showAllButtonPressed(_ sender: UIButton) {
         
         performSegue(withIdentifier: "ShowAllCats", sender: self)
+        
     }
 }
 

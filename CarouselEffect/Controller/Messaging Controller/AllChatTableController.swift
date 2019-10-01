@@ -21,7 +21,7 @@ class AllChatTableController: UITableViewController {
         
         messageTableView.register(UINib(nibName: "CustomAllChatCell", bundle: nil) , forCellReuseIdentifier: "AllChatCell")
         
-        configNavigationBar()
+        //configNavigationBar()
         
         checkIfUserIsLoggedIn()
         
@@ -74,6 +74,7 @@ class AllChatTableController: UITableViewController {
             var email = ""
            
             let user = User()
+            
             for (_, value) in dictionary {
                 //print(value["name"])
                 senderName = value["name"] as! String

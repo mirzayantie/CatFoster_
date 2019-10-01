@@ -16,6 +16,10 @@ class LoginViewController: UIViewController {
     @IBOutlet var emailTextfield: UITextField!
     @IBOutlet var passwordTextfield: UITextField!
     
+    @IBOutlet weak var userImage: UIImageView!
+    
+    @IBOutlet weak var loginButton: RoundButton!
+    
     var handle: AuthStateDidChangeListenerHandle?
 
     override func viewDidLoad() {
@@ -45,7 +49,16 @@ class LoginViewController: UIViewController {
 //    }
     
 
-    @IBAction func logInPressed(_ sender: AnyObject) {
+    @IBAction func logInPressed(_ sender: RoundButton) {
+        
+        //added to avoid error while logging in but fail
+        //UserDefaults.standard.set("LoggedIn", forKey: "accessToken")
+        
+       // changeRoot()
+        let mainTabController = storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+        mainTabController.selectedViewController = mainTabController.viewControllers?[0]
+        
+        present(mainTabController, animated: true,completion: nil)
         
         guard let email = emailTextfield.text, let password = passwordTextfield.text else {
             print ("Form is not valid")
@@ -61,11 +74,13 @@ class LoginViewController: UIViewController {
                 self.present(alertController, animated: true, completion: nil)
             } else {
                 print ("Login is successful!")
-                self.performSegue(withIdentifier: "goToCatProfile", sender: self)
+                //self.performSegue(withIdentifier: "goToCatProfile", sender: self)
             }
         }
     }
 
+    
+    
 }
 
 

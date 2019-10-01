@@ -10,6 +10,11 @@
 		9F03FFD9233331B0004C73F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F03FFD8233331B0004C73F7 /* GoogleService-Info.plist */; };
 		9F050116233AE428002C9FC5 /* PostForAdoptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050115233AE428002C9FC5 /* PostForAdoptionController.swift */; };
 		9F05011A233BD323002C9FC5 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050119233BD323002C9FC5 /* RoundButton.swift */; };
+		9F050F412342C71D00E9FD94 /* HomeController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050F402342C71D00E9FD94 /* HomeController_Extension.swift */; };
+		9F050F432342C96A00E9FD94 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050F422342C96A00E9FD94 /* TabBarViewController.swift */; };
+		9F08BC9E23407591003F8858 /* TextBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F08BC9D23407591003F8858 /* TextBorder.swift */; };
+		9F735CDB23418B12000DE21C /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F735CDA23418B12000DE21C /* DesignableTextField.swift */; };
+		9F735CE22341F814000DE21C /* customView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F735CE12341F814000DE21C /* customView.swift */; };
 		9F9698DB23384A1F00A2A848 /* CustomAllChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9698D923384A1F00A2A848 /* CustomAllChatCell.swift */; };
 		9F9698DC23384A1F00A2A848 /* CustomAllChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9698DA23384A1F00A2A848 /* CustomAllChatCell.xib */; };
 		9F9698E02338554A00A2A848 /* ChatList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9698DF2338554A00A2A848 /* ChatList.swift */; };
@@ -41,8 +46,13 @@
 		9F03FFD8233331B0004C73F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F050115233AE428002C9FC5 /* PostForAdoptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostForAdoptionController.swift; sourceTree = "<group>"; };
 		9F050119233BD323002C9FC5 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
-		9F9698D923384A1F00A2A848 /* CustomAllChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAllChatCell.swift; sourceTree = "<group>"; };
-		9F9698DA23384A1F00A2A848 /* CustomAllChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAllChatCell.xib; sourceTree = "<group>"; };
+		9F050F402342C71D00E9FD94 /* HomeController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController_Extension.swift; sourceTree = "<group>"; };
+		9F050F422342C96A00E9FD94 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		9F08BC9D23407591003F8858 /* TextBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBorder.swift; sourceTree = "<group>"; };
+		9F735CDA23418B12000DE21C /* DesignableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
+		9F735CE12341F814000DE21C /* customView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customView.swift; sourceTree = "<group>"; };
+		9F9698D923384A1F00A2A848 /* CustomAllChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomAllChatCell.swift; path = ../CustomAllChatCell.swift; sourceTree = "<group>"; };
+		9F9698DA23384A1F00A2A848 /* CustomAllChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomAllChatCell.xib; path = ../CustomAllChatCell.xib; sourceTree = "<group>"; };
 		9F9698DF2338554A00A2A848 /* ChatList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatList.swift; sourceTree = "<group>"; };
 		9F9698E123386A3D00A2A848 /* AllChatTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatTableController.swift; sourceTree = "<group>"; };
 		9F9698E32339A25E00A2A848 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -52,7 +62,7 @@
 		9FBDA36F2331D3EB00941D85 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FBDA3732331F90E00941D85 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		9FBDA3782332721800941D85 /* CustomMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessageCell.swift; sourceTree = "<group>"; };
-		9FBDA3792332721800941D85 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		9FBDA3792332721800941D85 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MessageCell.xib; path = ../MessageCell.xib; sourceTree = "<group>"; };
 		9FBDA37C2332764200941D85 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		9FBDA37E23327AA600941D85 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		9FC1CD7223304CDD0066D225 /* CarouselEffect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarouselEffect.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,18 +96,91 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9F08BC9623406236003F8858 /* Cat Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9F9698E52339DE5000A2A848 /* CatListController.swift */,
+				9F050115233AE428002C9FC5 /* PostForAdoptionController.swift */,
+				9F9698E9233A0FAE00A2A848 /* DetailCatInfoController.swift */,
+			);
+			path = "Cat Controller";
+			sourceTree = "<group>";
+		};
+		9F08BC9723406250003F8858 /* Messaging Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9F9698E123386A3D00A2A848 /* AllChatTableController.swift */,
+				9FBDA37E23327AA600941D85 /* ChatViewController.swift */,
+			);
+			path = "Messaging Controller";
+			sourceTree = "<group>";
+		};
+		9F08BC9823406277003F8858 /* Home Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9F050F422342C96A00E9FD94 /* TabBarViewController.swift */,
+				9FC1CD7723304CDD0066D225 /* CatProfileViewController.swift */,
+			);
+			name = "Home Controller";
+			sourceTree = "<group>";
+		};
+		9F08BC9923406295003F8858 /* LoginReg Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9F735CDC23418B1C000DE21C /* IBDesignable */,
+				9FBDA3732331F90E00941D85 /* RegisterViewController.swift */,
+				9FBDA36F2331D3EB00941D85 /* LoginViewController.swift */,
+			);
+			path = "LoginReg Controller";
+			sourceTree = "<group>";
+		};
+		9F08BC9B234062D1003F8858 /* Messaging Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9FBDA3782332721800941D85 /* CustomMessageCell.swift */,
+				9FBDA3792332721800941D85 /* MessageCell.xib */,
+				9F9698D923384A1F00A2A848 /* CustomAllChatCell.swift */,
+				9F9698DA23384A1F00A2A848 /* CustomAllChatCell.xib */,
+			);
+			path = "Messaging Cell";
+			sourceTree = "<group>";
+		};
+		9F08BC9C234062E8003F8858 /* Cat cell */ = {
+			isa = PBXGroup;
+			children = (
+				9FC1CD872330555A0066D225 /* CatCollectionViewCell.swift */,
+			);
+			path = "Cat cell";
+			sourceTree = "<group>";
+		};
+		9F735CDC23418B1C000DE21C /* IBDesignable */ = {
+			isa = PBXGroup;
+			children = (
+				9F735CDA23418B12000DE21C /* DesignableTextField.swift */,
+				9F050119233BD323002C9FC5 /* RoundButton.swift */,
+				9F08BC9D23407591003F8858 /* TextBorder.swift */,
+			);
+			path = IBDesignable;
+			sourceTree = "<group>";
+		};
+		9F735CDD2341F3A6000DE21C /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				9F735CE12341F814000DE21C /* customView.swift */,
+				9F050F402342C71D00E9FD94 /* HomeController_Extension.swift */,
+			);
+			name = "New Group";
+			path = "../New Group";
+			sourceTree = "<group>";
+		};
 		9FBDA36C2331CDB700941D85 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9FC1CD7723304CDD0066D225 /* CatProfileViewController.swift */,
-				9FBDA37E23327AA600941D85 /* ChatViewController.swift */,
-				9FBDA36F2331D3EB00941D85 /* LoginViewController.swift */,
-				9FBDA3732331F90E00941D85 /* RegisterViewController.swift */,
-				9F9698E123386A3D00A2A848 /* AllChatTableController.swift */,
-				9F9698E52339DE5000A2A848 /* CatListController.swift */,
-				9F9698E9233A0FAE00A2A848 /* DetailCatInfoController.swift */,
-				9F050115233AE428002C9FC5 /* PostForAdoptionController.swift */,
-				9F050119233BD323002C9FC5 /* RoundButton.swift */,
+				9F735CDD2341F3A6000DE21C /* New Group */,
+				9F08BC9923406295003F8858 /* LoginReg Controller */,
+				9F08BC9823406277003F8858 /* Home Controller */,
+				9F08BC9723406250003F8858 /* Messaging Controller */,
+				9F08BC9623406236003F8858 /* Cat Controller */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -125,12 +208,9 @@
 		9FBDA3752332711F00941D85 /* Custom cell */ = {
 			isa = PBXGroup;
 			children = (
-				9FC1CD872330555A0066D225 /* CatCollectionViewCell.swift */,
-				9FBDA3782332721800941D85 /* CustomMessageCell.swift */,
-				9FBDA3792332721800941D85 /* MessageCell.xib */,
-				9F9698D923384A1F00A2A848 /* CustomAllChatCell.swift */,
-				9F9698DA23384A1F00A2A848 /* CustomAllChatCell.xib */,
+				9F08BC9C234062E8003F8858 /* Cat cell */,
 				9F9698E72339E99800A2A848 /* CatViewCell.swift */,
+				9F08BC9B234062D1003F8858 /* Messaging Cell */,
 			);
 			path = "Custom cell";
 			sourceTree = "<group>";
@@ -302,13 +382,18 @@
 				9F050116233AE428002C9FC5 /* PostForAdoptionController.swift in Sources */,
 				9F9698E02338554A00A2A848 /* ChatList.swift in Sources */,
 				9FC1CD8A233059470066D225 /* CatProfile.swift in Sources */,
+				9F735CDB23418B12000DE21C /* DesignableTextField.swift in Sources */,
+				9F050F412342C71D00E9FD94 /* HomeController_Extension.swift in Sources */,
 				9F9698EA233A0FAE00A2A848 /* DetailCatInfoController.swift in Sources */,
 				9F9698DB23384A1F00A2A848 /* CustomAllChatCell.swift in Sources */,
 				9FC1CD7823304CDD0066D225 /* CatProfileViewController.swift in Sources */,
+				9F735CE22341F814000DE21C /* customView.swift in Sources */,
 				9FC1CD882330555A0066D225 /* CatCollectionViewCell.swift in Sources */,
 				9FBDA3742331F90E00941D85 /* RegisterViewController.swift in Sources */,
+				9F050F432342C96A00E9FD94 /* TabBarViewController.swift in Sources */,
 				9FBDA37D2332764200941D85 /* Message.swift in Sources */,
 				9F9698E62339DE5000A2A848 /* CatListController.swift in Sources */,
+				9F08BC9E23407591003F8858 /* TextBorder.swift in Sources */,
 				9FBDA3702331D3EB00941D85 /* LoginViewController.swift in Sources */,
 				9FBDA37F23327AA600941D85 /* ChatViewController.swift in Sources */,
 				9F9698E82339E99800A2A848 /* CatViewCell.swift in Sources */,
