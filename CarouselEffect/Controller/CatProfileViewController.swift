@@ -25,8 +25,8 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidLoad()
         
         setupCollectionView()
-        checkIfUserIsLoggedIn()
-        //setupNavBarButton()
+        
+        
     }
 
     func setupCollectionView() {
@@ -48,9 +48,6 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
             // User is signed in.
             let uid = Auth.auth().currentUser?.uid
 
-//            Database.database().reference().child("users").child(uid!).observe(.value, with: { (snapshot) in
-            //print("in")
-           // Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
                 Database.database().reference().child("users").child(uid!).observe(.value, with: { (snapshot) in
                     //!!!!!it can output all data from firebase but cannot output data based on uid.!!!!!!!!!
                     print(snapshot)

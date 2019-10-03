@@ -10,6 +10,8 @@ import UIKit
 import os.log
 import Firebase
 
+
+
 class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var catName: UITextField!
@@ -17,33 +19,30 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
     @IBOutlet weak var catBreed: UITextField!
     @IBOutlet weak var catAge: UITextField!
     @IBOutlet weak var catGender: UITextField!
-  
     @IBOutlet weak var submitButton: RoundButton!
     @IBOutlet weak var catColour: UITextField!
     @IBOutlet weak var catDescription: TextBorder!
-    
     @IBOutlet weak var additionalInfo: TextBorder!
     @IBOutlet weak var descriptionHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var infoHeightConstraint: NSLayoutConstraint!
     
-    var cat: CatProfile?
+    var cat: Cat?
     var currentid = ""
+    var chosenImage : UIImage!
+    var imageDownloadURL = ""
+    var ref = DatabaseReference.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        catName.delegate = self
-        
-        
-        
+        //catName.delegate = self
+        self.ref = Database.database().reference()
         //Set up views if editing an existing cat
         if let cat = cat {
-            navigationItem.title = cat.catName
+            //navigationItem.title = cat.catName
             catName.text = cat.catName
             catGender.text = cat.catGender
-            catImage.image = cat.catImage
+            //catImage.image = cat.catImageURL
             catBreed.text = cat.catBreed
             currentid = cat.catID
             catDescription.text = cat.catDescription
@@ -52,13 +51,9 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         }
         
         //configNavigationBar()
-        
         //textViewSetup()
-        
         //Enable the submit button only if the text field has a valid input
         updateSubmitButtonState()
-        
-        
         
     }
     
@@ -70,8 +65,8 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         descriptionHeight.constant = self.catDescription.contentSize.height
         infoHeightConstraint.constant = self.additionalInfo.contentSize.height
     }
-    //MARK: Navigation
     
+    //MARK: Submit detail cat info to database when submit button is pressed
     
     @IBAction func submitButtonPressed(_ sender: Any) {
         
@@ -79,41 +74,69 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
             os_log("The submit button was not pressed, cancelling...", log: OSLog.default, type: .debug)
             return
         }
-        
-        let name = catName.text ?? ""
-        let photo = catImage.image
-        let age = catAge.text ?? ""
-        let breed = catBreed.text ?? ""
-        let gender = catGender.text ?? ""
-        let description = catDescription.text ?? ""
-        let colour = catColour.text ?? ""
-        let otherInfo = additionalInfo.text ?? ""
+        self.saveFIRData()
         
         
-        cat = CatProfile(catID: currentid, catName: name, catImage: photo, catBreed: breed, catAge: age, catGender: gender, catDescription: description, catColour: colour, additionalInfo: otherInfo )
+    } //end of button clicked
+    func saveFIRData() {
+        self.uploadImage(self.catImage.image!) { (url) in
+    
+            self.saveAllData(name: self.catName.text!, imageURL: url!, age: self.catAge.text!, breed: self.catBreed.text!, gender: self.catGender.text!, colour: self.catColour.text!, description: self.catDescription.text!, otherInfo: self.additionalInfo.text!){ success in
+                if success != nil {
+                    print("yes!")
+                    
+                }
+            }
+        }
+    }
+    
+    func uploadImage(_ image:UIImage, completion: @escaping ((_ url: URL?) ->())){
         
-        //access firebase database
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        let catsRef = ref.child("cat")
-        //let storageRef = Storage.storage().reference()
+        let date :NSDate = NSDate()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'_'HH:mm:ss"
+        dateFormatter.timeZone = NSTimeZone(name: "GMT") as TimeZone?
+        //use date as cat image file name
+        let randomName = "\(dateFormatter.string(from: date as Date))"
         
-        //create data
+        //2. create a new storage reference
+        let storageRef = Storage.storage().reference().child("image").child("catimage/\(randomName).png")
+        
+        let imgData = catImage.image?.pngData()
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/png"
+        storageRef.putData(imgData!, metadata: metaData) { (metadata, error) in
+            if error == nil {
+                print("success")
+                storageRef.downloadURL(completion: { (url, error) in
+                    completion(url)
+                })
+            } else {
+                print ("error")
+                completion(nil)
+            }
+        }
+    }
+    
+    func saveAllData(name: String, imageURL: URL, age: String, breed: String, gender: String, colour: String, description: String, otherInfo: String, completion: @escaping ((_ url: URL?) -> ())){
+        
+
+        
         var dict = [String: Any]()
         dict.updateValue(name, forKey: "name")
-        dict.updateValue("photo\(name)", forKey: "photo")
+        dict.updateValue(imageURL.absoluteString, forKey: "photo")
         dict.updateValue(age, forKey: "age")
         dict.updateValue(breed, forKey: "breed")
         dict.updateValue(gender, forKey: "gender")
         dict.updateValue(colour, forKey: "colour")
         dict.updateValue(description, forKey: "description")
         dict.updateValue(otherInfo, forKey: "otherInfo")
-        
-        catsRef.childByAutoId().setValue(dict)
-        
-
+        self.ref.child("cat").childByAutoId().setValue(dict)
     }
-    //MARK: ACTION
+    
+    
+    
+    //MARK: ACTION PICKER
     
     @IBAction func selectImagefromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         //hide keyboard. It ensures that if the user taps the image view while typing in the text field, the keyboard is dismissed properly.
@@ -125,6 +148,7 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         imgPickerController.sourceType = .photoLibrary
         
         imgPickerController.delegate = self
+        
         present(imgPickerController, animated: true, completion: nil)
     }
     
@@ -134,8 +158,8 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
-        catImage.image = selectedImage
-        
+        //catImage.image = selectedImage
+        self.catImage.image = selectedImage
         dismiss(animated: true, completion: nil)
         
         
@@ -166,21 +190,10 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
     //MARK: Private Methods
     
     private func updateSubmitButtonState(){
-        //Disable the Save button if the text field is empty
-//        let text = catName.text ?? ""
-//        saveButton.isEnabled = !text.isEmpty
-//
-//        saveButton.isEnabled = false
-//
+
         // if all text field are not empty, enable save button
         
-        //        guard catDescription != nil else {
-        //            return
-        //
-        //        }
         [catAge, catName, catColour, catBreed, catGender].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
-        //
-        
         
     }
     
@@ -203,41 +216,10 @@ class PostForAdoptionController: UIViewController, UITextFieldDelegate, UIImageP
                 self.submitButton.isEnabled = false
                 return
         }
-       
+        
         submitButton.isEnabled = true
     }
     
-    
-    
-    //    func configNavigationBar() {
-    //
-    //        // Create the navigation bar
-    //        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 64))
-    //
-    //        // Offset by 20 pixels vertically to take the status bar into account
-    //
-    //        navigationBar.backgroundColor = UIColor.white
-    //
-    //        // Create a navigation item with a title
-    //        let navigationItem = UINavigationItem()
-    //        navigationItem.title = "Post"
-    //
-    //        //Back button logged user off to login page
-    //        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
-    //
-    //
-    //        // Assign the navigation item to the navigation bar
-    //        navigationBar.items = [navigationItem]
-    //
-    //        // Make the navigation bar a subview of the current view controller
-    //        self.view.addSubview(navigationBar)
-    //
-    //    }
-    //
-    //    @objc func handleBack() {
-    //
-    //        dismiss(animated: true, completion: nil)
-    //    }
 }
 
 

@@ -9,8 +9,10 @@ target 'CarouselEffect' do
 
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
-pod 'Firebase/Storage'
+pod 'Firebase/Storage','~>4.0'
 pod 'SVProgressHUD'
+pod 'Firebase/Core'
+pod 'Kingfisher','~4.0'
 
 end
 

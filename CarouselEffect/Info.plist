@@ -44,6 +44,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to add photos of your cat</string>
+	<string>Allows you to add photos</string>
 </dict>
 </plist>
