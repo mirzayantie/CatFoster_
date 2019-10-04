@@ -18,17 +18,55 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var showAllButton: UIButton!
     @IBOutlet weak var welcomeMessage: UILabel!
     
-    var catProfile = CatProfile.createCatProfile()
-    
+    var catProfile : [CatProfile] = [CatProfile]()
+    var ref: DatabaseReference!
     let cellScale : CGFloat = 0.6
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        ref = Database.database().reference()
+        //checkIfUserIsLoggedIn()
         setupCollectionView()
-        
-        
+        loadCatList()
+      
     }
-
+    
+    //MARK: Private Methods. load from server
+    private func loadCatList() {
+        //access firebase database
+        
+        let catRef = ref.child("cat")
+        //read data
+        catRef.observe(DataEventType.value, with: { (snapshot) in
+            //clear local data
+            self.catProfile = []
+            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+            //print("Amount of data from server \(postDict.count)")
+            var catName = ""
+            var catImageURL = ""
+            var catAge = ""
+            var catGender = ""
+            
+            
+            for (key, value) in postDict {
+                print("\(key) -> \(value)")
+                
+                catName = value["name"] as! String
+                catImageURL = value["photo"] as! String
+                catAge = value["age"] as! String
+                catGender = value["gender"] as! String
+            
+                
+                let cats = CatProfile(catName: catName, catImageURL: catImageURL, catAge: catAge, catGender: catGender)
+                
+                self.catProfile += [cats]
+                
+                //print("Amount of data from local \(self.catList.count)")
+            }
+            //reload local data when get data from server
+            self.collectionView.reloadData()
+        })
+    }
     func setupCollectionView() {
         let screenSize = UIScreen.main.bounds.size
         let cellWidth = floor(screenSize.width * cellScale)
@@ -48,48 +86,20 @@ class CatProfileViewController: UIViewController, UICollectionViewDelegate, UICo
             // User is signed in.
             let uid = Auth.auth().currentUser?.uid
 
-                Database.database().reference().child("users").child(uid!).observe(.value, with: { (snapshot) in
+                Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
                     //!!!!!it can output all data from firebase but cannot output data based on uid.!!!!!!!!!
                     print(snapshot)
                     //print("user found")
-//                    let value = snapshot.value as? NSDictionary
-//                    let name = value?["name"] as? String ?? ""
-//                    self.welcomeMessage.text = name
+                    let value = snapshot.value as? NSDictionary
+                    let name = value?["name"] as? String ?? ""
+                    self.welcomeMessage.text = "Hello \(name)"
                 }, withCancel: nil)
             
-                //if let dictionary = snapshot.value as? [String : AnyObject] {
-                    // ???????????????????not functioning yet
-                    //self.welcomeMessage.text = dictionary ["name"] as? String
-                //}
-            //}, withCancel: nil)
-
-
-           
-//            let ref = Database.database().reference().child("users")
-//            ref.observe(.childAdded) { (snapshot) in
-//
-//                let snapshotValue = snapshot.value as! Dictionary<String,String>
-//                let userName = snapshotValue["name"]!
-//                self.welcomeMessage.text = userName
-//                print(userName)
-
-            
         } else {
-            // No user is signed in.
-            // ...
+            print("No user is signed in")
         }
     }
     
-    func setupNavBarButton() {
-        let searchImage = UIImage(named: "search")?.withRenderingMode(.alwaysOriginal)
-        let searchBarButtonItem = UIBarButtonItem(image: searchImage, style: .plain, target: self, action: #selector(handleSearch))
-
-        navigationItem.rightBarButtonItem = searchBarButtonItem
-    }
-
-    @objc func handleSearch() {
-        //
-    }
     
     //MARK : UICollectionViewDataSource method
     

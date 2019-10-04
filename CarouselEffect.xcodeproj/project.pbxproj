@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F03FFD9233331B0004C73F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F03FFD8233331B0004C73F7 /* GoogleService-Info.plist */; };
 		9F050116233AE428002C9FC5 /* PostForAdoptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050115233AE428002C9FC5 /* PostForAdoptionController.swift */; };
 		9F05011A233BD323002C9FC5 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050119233BD323002C9FC5 /* RoundButton.swift */; };
 		9F050F412342C71D00E9FD94 /* HomeController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F050F402342C71D00E9FD94 /* HomeController_Extension.swift */; };
@@ -15,6 +14,7 @@
 		9F084C2C2345DFFA00D798D3 /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F084C2B2345DFFA00D798D3 /* Cat.swift */; };
 		9F08BC9E23407591003F8858 /* TextBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F08BC9D23407591003F8858 /* TextBorder.swift */; };
 		9F15A6222345630200DB8BB2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F15A6212345630200DB8BB2 /* Post.swift */; };
+		9F174168234753FA001CC017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F174167234753FA001CC017 /* GoogleService-Info.plist */; };
 		9F1A51BF2343E35C00F1D2CA /* RoundedUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1A51BE2343E35C00F1D2CA /* RoundedUIView.swift */; };
 		9F1A51C12343FA9300F1D2CA /* SubmitPopOutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1A51C02343FA9300F1D2CA /* SubmitPopOutController.swift */; };
 		9F735CDB23418B12000DE21C /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F735CDA23418B12000DE21C /* DesignableTextField.swift */; };
@@ -47,7 +47,6 @@
 		025F0C0F4F4D16589A701D15 /* Pods-CarouselEffect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarouselEffect.debug.xcconfig"; path = "Target Support Files/Pods-CarouselEffect/Pods-CarouselEffect.debug.xcconfig"; sourceTree = "<group>"; };
 		4E08B1BFB8A0117A1A276348 /* Pods_CarouselEffect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarouselEffect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97BA3948B525BBD63B09DF49 /* Pods-CarouselEffect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarouselEffect.release.xcconfig"; path = "Target Support Files/Pods-CarouselEffect/Pods-CarouselEffect.release.xcconfig"; sourceTree = "<group>"; };
-		9F03FFD8233331B0004C73F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F050115233AE428002C9FC5 /* PostForAdoptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostForAdoptionController.swift; sourceTree = "<group>"; };
 		9F050119233BD323002C9FC5 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		9F050F402342C71D00E9FD94 /* HomeController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController_Extension.swift; sourceTree = "<group>"; };
@@ -55,6 +54,7 @@
 		9F084C2B2345DFFA00D798D3 /* Cat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
 		9F08BC9D23407591003F8858 /* TextBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBorder.swift; sourceTree = "<group>"; };
 		9F15A6212345630200DB8BB2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		9F174167234753FA001CC017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F1A51BE2343E35C00F1D2CA /* RoundedUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedUIView.swift; sourceTree = "<group>"; };
 		9F1A51C02343FA9300F1D2CA /* SubmitPopOutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitPopOutController.swift; sourceTree = "<group>"; };
 		9F735CDA23418B12000DE21C /* DesignableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
@@ -253,8 +253,8 @@
 				9FBDA36C2331CDB700941D85 /* Controller */,
 				9FC1CD7523304CDD0066D225 /* AppDelegate.swift */,
 				9FC1CD7C23304CDF0066D225 /* Assets.xcassets */,
+				9F174167234753FA001CC017 /* GoogleService-Info.plist */,
 				9FC1CD7E23304CDF0066D225 /* LaunchScreen.storyboard */,
-				9F03FFD8233331B0004C73F7 /* GoogleService-Info.plist */,
 				9FC1CD8123304CDF0066D225 /* Info.plist */,
 			);
 			path = CarouselEffect;
@@ -331,10 +331,10 @@
 			files = (
 				9FC1CD8023304CDF0066D225 /* LaunchScreen.storyboard in Resources */,
 				9FC1CD7D23304CDF0066D225 /* Assets.xcassets in Resources */,
-				9F03FFD9233331B0004C73F7 /* GoogleService-Info.plist in Resources */,
 				9FBDA37B2332721800941D85 /* MessageCell.xib in Resources */,
 				9F9698DC23384A1F00A2A848 /* CustomAllChatCell.xib in Resources */,
 				9FC1CD7B23304CDD0066D225 /* Main.storyboard in Resources */,
+				9F174168234753FA001CC017 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

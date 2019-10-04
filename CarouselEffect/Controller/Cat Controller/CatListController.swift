@@ -8,30 +8,31 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class CatListController: UITableViewController {
     
-    //var catList : [CatProfile] = CatProfile.createCatProfile()
+
     var catList : [Cat] = [Cat]()
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        ref = Database.database().reference()
         loadCatList()
         
     }
     
     //MARK: Private Methods. load from server
     private func loadCatList() {
-        //access firebase database
-        let ref = Database.database().reference(fromURL: "https://flash-chat-e266a.firebaseio.com/")
-        //var ref: DatabaseReference!
-        //ref = Database.database().reference()
+       
+
         let catRef = ref.child("cat")
-        //read data
+        //read from firebase database
         catRef.observe(DataEventType.value, with: { (snapshot) in
             //clear local data
             self.catList = []
+            
             let postDict = snapshot.value as? [String : AnyObject] ?? [:]
             //print("Amount of data from server \(postDict.count)")
             var catName = ""
@@ -42,7 +43,6 @@ class CatListController: UITableViewController {
             var catGender = ""
             var catDescription = ""
             var catAddInfo = ""
-            //var currentid = ""
             
             for (key, value) in postDict {
                 print("\(key) -> \(value)")
@@ -96,6 +96,7 @@ class CatListController: UITableViewController {
         return cell
     }
     
+    // MARK : Pass cats detail to detailCatController
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailCatController = storyboard?.instantiateViewController(withIdentifier: "DetailCatInfoController") as? DetailCatInfoController
@@ -108,10 +109,14 @@ class CatListController: UITableViewController {
         detailCatController?.getCatDescription = catList[indexPath.row].catDescription
         detailCatController?.getCatAddInfo = catList[indexPath.row].additionalInfo
         
-        //detailCatController?.getCatImage = cats.catImage as UIImage
+        let url = URL(string: catList[indexPath.row].catImageURL)
+        // convert url to image
+        KingfisherManager.shared.retrieveImage(with: url!, options: nil, progressBlock: nil ) { (image, error, cache, url) in
+            
+            detailCatController?.getCatImage = image!
 
         self.navigationController?.pushViewController(detailCatController!, animated: true)
+        }
     }
-    
     
 }

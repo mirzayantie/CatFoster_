@@ -7,18 +7,21 @@
 //
 
 import UIKit
+import Firebase
 
 extension UIViewController {
+  
     
     func changeRoot() {
         let mainTabController = storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
         
 
         present(mainTabController, animated: true,completion: nil)
-        //        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        //        appDelegate?.window?.rootViewController = vc
-        //        appDelegate?.window?.makeKeyAndVisible()
+//                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+//                appDelegate?.window?.rootViewController = vc
+//                appDelegate?.window?.makeKeyAndVisible()
         
     }
     
+   
 }
